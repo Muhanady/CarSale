@@ -1,0 +1,41 @@
+<h3>Vehicles List</h3>
+{{vv|json}}
+<a [routerLink]="['/vehicle/new']" class="btn btn-primary">New Vehicle</a>
+<br/>
+<div class="forum-group">
+  <label for="make">Sort</label>
+  <select name="make" id="make" class="form-control" [(ngModel)]="query.makeId" (change)="onFilterChanged()">
+    <option value=""></option>
+    <option *ngFor="let m of makes" value="{{m.id}}">{{m.name}}</option>
+  </select>
+  <button class="btn btn-default" (click)="restFilter()">Rest</button>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th *ngFor="let c of columns">
+        <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+          {{c.title}}
+          <i *ngIf="query.sortingBy===c.key" class="fa" [class.fa-sort-asc]="query.isSortingAscending" [class.fa-sort-desc]="!query.isSortingAscending">
+          </i>
+        </div>
+        <div *ngIf="!c.isSortable">
+          {{c.title}}
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let vehicle of vehicles ">
+      <td>{{vehicle.id}}</td>
+      <td>{{vehicle.make.name}}</td>
+      <td>{{vehicle.model.name}}</td>
+      <td>{{vehicle.contact.name}}</td>
+
+      <td>
+        <a href="/vehicle/{{vehicle.id}} ">View</a>
+      </td>
+
+    </tr>
+  </tbody>
+</table>
