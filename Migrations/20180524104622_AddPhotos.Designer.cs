@@ -11,9 +11,10 @@ using System;
 namespace CarSale.Migrations
 {
     [DbContext(typeof(CarDbContext))]
-    partial class CarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180524104622_AddPhotos")]
+    partial class AddPhotos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +30,7 @@ namespace CarSale.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.Property<int>("VehicleId");
+                    b.Property<int?>("VehicleId");
 
                     b.HasKey("Id");
 
@@ -129,8 +130,7 @@ namespace CarSale.Migrations
                 {
                     b.HasOne("CarSaleCore.Models.Vehicle")
                         .WithMany("Photos")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("CarSaleCore.Models.Model", b =>

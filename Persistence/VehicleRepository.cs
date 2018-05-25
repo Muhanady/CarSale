@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using CarSale.Core.Models;
 using CarSale.Extentions;
 using CarSaleCore.Models;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace CarSale.Persistence {
                 .SingleOrDefaultAsync (f => f.Id == id);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetVehicles (VehicleQuery queryObj) {
+        public async Task<QueryResult<Vehicle>> GetVehicles (VehicleQuery queryObj) {
             var query = context.Vehicles.Include (i => i.Features)
                 .ThenInclude (m => m.Feature)
                 .Include (i => i.Model)
@@ -46,9 +47,14 @@ namespace CarSale.Persistence {
                 };
 
             query = query.ApplyOrdering (queryObj, columnsMap);
-            query = query.ApplyPaging (queryObj);
 
-            return await query.ToListAsync ();
+            var result = new QueryResult<Vehicle> () {
+                TotalItems = await query.CountAsync (),
+                Items = await query.ToListAsync ()
+            };
+
+            query = query.ApplyPaging (queryObj);
+            return result;
         }
 
         public void Remove (Vehicle vehicle) {

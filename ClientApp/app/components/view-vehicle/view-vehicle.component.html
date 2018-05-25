@@ -1,0 +1,45 @@
+<!-- <ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active" class="nav-item">
+    <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab" id="home-tab">Vehicle</a>
+  </li>
+  <li role="presentation" class="nav-item">
+    <a href="#photos" aria-controls="photos" role="tab" data-toggle="tab" id="photo-tab">Photos</a>
+  </li>
+</ul> -->
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a href="#basic" aria-controls="basic" role="tab" data-toggle="tab" id="home-tab" class="nav-item nav-link active" aria-selected="true">Vehicle</a>
+    <a class="nav-item nav-link" href="#photos" aria-controls="photos" role="tab" data-toggle="tab" id="photo-tab" aria-selected="false">Photos</a>
+
+  </div>
+</nav>
+<div class="tab-content" id="myTabContent" *ngIf="vehicle">
+  <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="home-tab">
+    <h2>Basics</h2>
+    <ul>
+      <li>Make : {{vehicle.make.name}}</li>
+      <li>Model : {{vehicle.model.name}}</li>
+      <li>Is Registered : {{vehicle.isRegistered?"Yes":"No"}}</li>
+    </ul>
+    <h2>Features</h2>
+    <ul>
+      <li *ngFor="let f of vehicle.features">{{f.name}}</li>
+    </ul>
+    <h2>Contact</h2>
+    <ul>
+      <li>Contact Name: {{vehicle.contact.name}}</li>
+      <li>Contact Phone: {{vehicle.contact.phone}}</li>
+      <li>Contact Email: {{vehicle.contact.email}}</li>
+    </ul>
+  </div>
+  <div class="tab-pane fade" id="photos" role="tabpanel" aria-labelledby="photo-tab">
+    <h2>Photos</h2>
+    <input type="file" (change)="uploadPhoto()" #fileInput>
+    <br/>
+    <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" class="img-thumbnail">
+  </div>
+</div>
+<a [routerLink]="['/vehicle/'+vehicleId]" class="btn btn-success">Edit</a>
+<button class="btn btn-danger" type="button" (click)="delete()">Delete</button>
+<a [routerLink]="['/vehicles']" class="btn btn-light">View Vehicles</a>

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CarSale.Core;
+using CarSale.Core.Models;
 using CarSale.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,13 +24,17 @@ namespace CarSale {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
+            services.Configure<PhotoSettings> (Configuration.GetSection ("PhotoSettings"));
             services.AddDbContext<CarDbContext> (opt => {
                 opt.UseSqlServer (Configuration.GetConnectionString ("Default"));
             });
             services.AddMvc ();
             services.AddAutoMapper ();
             services.AddScoped<IVehicleRepository, VehicleRepository> ();
+            services.AddScoped<IPhotoRepository,PhotoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork> ();
+
+    
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

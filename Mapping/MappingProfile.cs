@@ -2,17 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using CarSale.Controllers.Resources;
+using CarSale.Core.Models;
 using CarSale.Persistence;
 using CarSaleCore.Models;
 
 namespace CarSale.Mapping {
     public class MappingProfile : Profile {
         public MappingProfile () {
-
+            CreateMap (typeof (QueryResult<>), typeof (QueryResultResource<>));
             CreateMap<Make, MakeResource> ();
             CreateMap<Make, KeyValuePairResource> ();
             CreateMap<Model, KeyValuePairResource> ();
             CreateMap<Feature, KeyValuePairResource> ();
+            CreateMap<Photo, PhotoResource> ();
 
             CreateMap<Vehicle, SaveVehicleResource> ()
                 .ForMember (vr => vr.Contact, opt => opt.MapFrom (v => new ContactResource {

@@ -37,7 +37,8 @@ export class VehicleFormComponent implements OnInit {
     private vehicleService: VehicleService,
     private toastr: ToastrService) {
     route.params.subscribe(p => {
-      this.vehicle.id = +p["id"];
+              this.vehicle.id = +p["id"]||0;
+
     });
 
   }
@@ -46,22 +47,27 @@ export class VehicleFormComponent implements OnInit {
     var sources = [
       this.vehicleService.getFeatures(),
       this.vehicleService.getMakes()];
+
+
     if (this.vehicle.id)
       sources.push(this.vehicleService.getVehicle(this.vehicle.id))
     Observable.forkJoin(sources).subscribe(data => {
       this.features = data[0];
       this.makes = data[1];
+
       if (this.vehicle.id) {
         this.setVehicle(data[2] as Vehicle)
         this.populateModels();
       }
     }, error => {
+      //console.log(error);
       if (error.status == 404) {
         this.router.navigate(['/home']);
       }
     });
   }
   private setVehicle(v: Vehicle) {
+
     this.vehicle.modelId = v.model.id;
     this.vehicle.makeId = v.make.id;
     this.vehicle.isRegistered = v.isRegistered;
@@ -91,16 +97,10 @@ export class VehicleFormComponent implements OnInit {
         err => { this.toastr.error('Error', 'Some thing went wrong') });
     }
     else {
-      this.vehicleService.create(this.vehicle).subscribe(s =>
-        this.toastr.success('Done', 'Vehicle Saved'));
+      this.vehicle.id = 0;
+      this.vehicleService.create(this.vehicle).subscribe(s => this.router.navigate(['/vehicle/view/' + (s as Vehicle).id]));
+      //  ;
     }
   }
-  delete() {
-    if (confirm("Are you sure?")) {
-      this.vehicleService.delete(this.vehicle.id).subscribe(s=>{
-        this.router.navigate(['/home']);
-      });
-    }
-    
-  }
+
 }

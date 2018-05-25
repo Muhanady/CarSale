@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class VehicleService {
 
-  private readonly vehiclesEndPoint = "/api/vehicle";
+  private readonly vehiclesEndPoint = "/api/vehicle/";
   constructor(private http: HttpClient) { }
 
   getMakes() {

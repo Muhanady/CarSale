@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CarSale.Controllers.Resources;
 using CarSale.Core;
+using CarSale.Core.Models;
 using CarSale.Persistence;
 using CarSaleCore.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +24,11 @@ namespace CarSale.Controllers {
         }
 
         [HttpGet]
-        public async Task<IEnumerable<VehicleResource>> GetVehicles (VehicleQueryResource filter) {
+        public async Task<QueryResultResource<VehicleResource>> GetVehicles (VehicleQueryResource filter) {
             var _filter = mapper.Map<VehicleQueryResource, VehicleQuery> (filter);
-            var vehicles = await repository.GetVehicles (_filter);
-            return mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>> (vehicles);
+            var queryResult = await repository.GetVehicles (_filter);
+            return mapper.Map<QueryResult<Vehicle>, QueryResultResource<VehicleResource>> (queryResult);
+
         }
 
         [HttpGet ("{id}")]

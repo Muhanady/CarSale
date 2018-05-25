@@ -29,7 +29,9 @@ export class VehiclesComponent implements OnInit {
     this.populateVehicles();
   }
   private populateVehicles() {
-    this.vehicleService.getVehicles(this.query).subscribe((s: any) => this.vehicles = s);
+    this.vehicleService.getVehicles(this.query).subscribe((result: any) => {
+    this.vehicles = result.items;
+    });
   }
   onFilterChanged() {
     this.populateVehicles();

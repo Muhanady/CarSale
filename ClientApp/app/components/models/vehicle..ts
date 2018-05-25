@@ -27,3 +27,8 @@ export interface SaveVehicle {
     contact: Contact;
 
 }
+export interface perTotal
+{
+    total:any;
+    percentage:number;
+}
