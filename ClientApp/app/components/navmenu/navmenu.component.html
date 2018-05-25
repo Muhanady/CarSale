@@ -12,6 +12,12 @@
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse'>
             <ul class='nav navbar-nav'>
+                <li>
+                    <a (click)="auth.login()">
+                        <span class='glyphicon glyphicon-user'></span> Login
+                    </a>
+                </li>
+
                 <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/home']">
                         <span class='glyphicon glyphicon-home'></span> Home
@@ -27,7 +33,7 @@
                         <span class='glyphicon glyphicon-th-list'></span> Fetch data
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']" >
+                <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/vehicles']">
                         <span class='glyphicon glyphicon-plus'></span> Vehicles
                     </a>

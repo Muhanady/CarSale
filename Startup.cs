@@ -6,6 +6,7 @@ using AutoMapper;
 using CarSale.Core;
 using CarSale.Core.Models;
 using CarSale.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,10 +32,18 @@ namespace CarSale {
             services.AddMvc ();
             services.AddAutoMapper ();
             services.AddScoped<IVehicleRepository, VehicleRepository> ();
-            services.AddScoped<IPhotoRepository,PhotoRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository> ();
             services.AddScoped<IUnitOfWork, UnitOfWork> ();
 
-    
+            // 1. Add Authentication Services
+            services.AddAuthentication (options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer (options => {
+                options.Authority = "https://carsaleproject.auth0.com/";
+                options.Audience = "https://api.carsale.com";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +58,8 @@ namespace CarSale {
             }
 
             app.UseStaticFiles ();
-
+            // 2. Enable authentication middleware
+            app.UseAuthentication ();
             app.UseMvc (routes => {
                 routes.MapRoute (
                     name: "default",

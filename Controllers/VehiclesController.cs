@@ -7,6 +7,7 @@ using CarSale.Core;
 using CarSale.Core.Models;
 using CarSale.Persistence;
 using CarSaleCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,7 @@ namespace CarSale.Controllers {
             return Ok (result);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateVehicle ([FromBody] SaveVehicleResource vehicleResource) {
 
@@ -60,6 +62,7 @@ namespace CarSale.Controllers {
 
         }
 
+        [Authorize]
         [HttpPut ("{id}")]
         public async Task<IActionResult> UpdateVehicle (int id, [FromBody] SaveVehicleResource vehicleResource) {
             if (!ModelState.IsValid)
@@ -80,6 +83,7 @@ namespace CarSale.Controllers {
             return Ok (result);
         }
 
+        [Authorize]
         [HttpDelete ("{id}")]
         public async Task<IActionResult> DeleteVehicle (int id) {
             var vehicle = await repository.GetVehicle (id, false);

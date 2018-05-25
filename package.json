@@ -64,7 +64,11 @@
   },
   "dependencies": {
     "@auth0/angular-jwt": "^2.0.0",
+    "@types/auth0-js": "^8.11.2",
     "@types/underscore": "^1.8.8",
+    "angular2-jwt": "^0.2.3",
+    "auth0-js": "^9.5.1",
+    "auth0-lock": "^11.6.1",
     "font-awesome": "^4.7.0",
     "ngx-toastr": "^8.6.0",
     "raven-js": "^3.25.2",

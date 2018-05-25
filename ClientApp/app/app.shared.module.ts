@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { BrowserXhr } from '@angular/http';
 import { ProgressService, BrowserXhrWithProgress } from './services/progress.service';
 import { PhotoService } from './services/photo.service';
@@ -52,6 +53,7 @@ Raven
         FormsModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
+            { path: 'callback', component: VehiclesComponent },
             { path: 'vehicles', component: VehiclesComponent },
             { path: 'vehicle/view/:id', component: ViewVehicleComponent },
             { path: 'vehicle/new', component: VehicleFormComponent },
@@ -69,7 +71,8 @@ Raven
         MakeService,
         VehicleService,
         PhotoService,
-        ProgressService
+        ProgressService,
+        AuthService
         
     ]
 })
